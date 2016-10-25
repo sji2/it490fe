@@ -64,33 +64,12 @@
 
 </style>
 
-<script>
-
-    
-    function See() {
-
-        if (document.getElementById("checkbox").checked)
-
-        {
-            document.getElementById("password").type = "text"
-        }
-
-        if (!document.getElementById("checkbox").checked)
-
-        {
-            document.getElementById("password").type = "password"
-        }
-
-
-    }
-</script>
-
     <head>
             <title>C.R.I.</title>
     </head>
     <body>
                 
-        <form action="login.php?action=login" method="post">
+        <form action="login.php" method="post">
 
                 <div class="imgcontainer">
                 <img src="images/CRIresize.png" alt="C.R.I. logo" class="avatar">
@@ -111,7 +90,7 @@
                 <br>
                 <br> -->
 
-                <button type="submit" name="bttLogin" value="Login">Login</button>                
+                <button type="submit" name="submit">Login</button>                
 
                 <span class="psw"><a href="registration.html">Register</a></span>
 
