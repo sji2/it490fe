@@ -66,36 +66,18 @@
 
 </style>
 
-<script>
-    function See() {
-
-        if (document.getElementById("checkbox").checked)
-
-        {
-            document.getElementById("password").type = "text"
-        }
-
-        if (!document.getElementById("checkbox").checked)
-
-        {
-            document.getElementById("password").type = "password"
-        }
-
-    }
-</script>
-
     <head>
             <title>Recall Info</title>    
     </head>
     <body>
-        <form action="registration.php" method="post">
+        <form action="recallInfo.php" method="post">
 
                 <div class="imgcontainer">
                 <img src="images/CRIresize.png" alt="C.R.I. logo" class="avatar">
                 </div>
 
                 <div class="container">
-                                
+
                 </div>
 
         </form>
@@ -103,7 +85,9 @@
         <?php
             session_start();
             echo 'this is the $_SESSION User: '.$_SESSION['username'];
-            
+            echo '<div class="container">
+                                                
+                </div>'
         ?>
 
 

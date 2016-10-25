@@ -30,6 +30,9 @@
 
 	<head>
 		<title>Profile</title>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 	</head>
 
 	<body>
@@ -52,8 +55,8 @@
 	
 	session_start();
 	
-	echo $_POST['username'];
-	print_r($_POST);
+	//echo $_POST['username'];
+	//print_r($_POST);
 
 
 	if (!empty($_POST)) {
@@ -79,9 +82,13 @@
 		
 		//assign a payload variable to have the response from the server
 	
-	echo "<div class='container'>";
+		echo "<div class='container'>";
+		
+		
 
-		if (!empty($payload['first_name'])) {
+		if (!empty($payload['first_name'])) 
+
+		{
 
 				$_SESSION['username']=$username;
 				$_SESSION['password']=$password;
@@ -89,13 +96,27 @@
 				//echo $_SESSION['username'];
 				//echo $username;
 
-				echo "<div style='text-align:right'><a href='login.html?action=logout'>Logout</a></div><br>";
-				echo "<br>";
+				echo "<div style='text-align:right'><a href='login.html?action=logout'>Logout</a></div><br><br>";				
 				echo "Welcome ".$payload["first_name"] . "	" . $payload["last_name"];
 				echo "<br><br>";
 
-				
-				//echo "<ul>";
+
+			echo "<form>
+					<label>Year</label>
+					<select name='year' id='yearSelect'>
+					</select>
+
+					<label>Make</label>
+					<select name='make' id='makeSelect'>
+					</select>
+
+					<label>Model</label>
+					<select name='model' id='modelSelect'>
+					</select>		
+
+				</form>	";
+
+
 				echo "<table border='4' class='stats' cellspacing='5'>
 
 					 	<tr>
@@ -117,13 +138,19 @@
 					            echo "<td>" . "$y_value" . "</td>";
 						}
 						echo "</tr>";
-    echo "</div>";
-
-					
+   			echo "</div>";
+   
 				}
+ 
+
+ ////////////////////////////////////
+
+		
 
 
+//////////////////////////////////
 			}
+
 		else {
 			echo 'Account is invalid<br>';
 			echo "<a href='login.html?action=logout'>Try again</a>";
@@ -143,12 +170,86 @@
 	*/
 
 	
-
-
-
-
 	?>
+
+
+	<script type="text/javascript">		
 	
+
+	$(document).ready(function(){	
+
+	//call api for model years
+		$.ajax({
+                type: "POST",
+                url: "proxy.php",
+                data: {type: "year"}                
+            }).done(function(result){
+                result = JSON.parse(result);                
+                results = result['Results'];
+
+                for(row in results)
+                {
+                    //skip first row
+                    if(row > 0)
+                    {
+                        year = results[row]['ModelYear'];
+                        $("#yearSelect").append("<option value="+year+">"+year+"</option>");
+                    }
+                }
+            });
+    //event handler when year is selected
+    $("#yearSelect").on("change", function(){
+                year = this.value;
+                $("#makeSelect").empty();
+                $("#modelSelect").empty();
+
+                //call api for makes
+                $.ajax({
+                    type: "POST",
+                    url: "proxy.php",
+                    data: {type: "make", param: {year: year}},
+                }).done(function(result){
+                    
+                    result = JSON.parse(result);
+                    results = result['Results'];
+
+                    for(row in results)
+                    {
+                        //console.log(results[row]['Make']);
+                        make = results[row]['Make'];
+                        $("#makeSelect").append("<option value="+make+">"+make+"</option>");
+                    }
+                });
+            });
+    //event handler when Make is selected
+    $("#makeSelect").on("change", function(){
+                make = this.value;
+                year = $("#yearSelect").val();
+                $("#modelSelect").empty();
+
+                //call api for models
+                $.ajax({
+                    type: "POST",
+                    url: "proxy.php",
+                    data: {type: "model", param: {year: year, make: make}},
+                }).done(function(result){
+                    result = JSON.parse(result);
+                    results = result['Results'];  
+
+                    for(row in results)
+                    {
+                        model = results[row]['Model'];
+                        $("#modelSelect").append("<option value="+model+">"+model+"</option>");
+                    }   
+                });
+            });
+
+	});
+
+
+
+
+	</script>
 
 
 	</body>
