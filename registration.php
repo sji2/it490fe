@@ -11,7 +11,7 @@ $firstName = $_POST["firstName"];
 $lastName = $_POST["lastName"];
 $username = $_POST["username"];
 $password = $_POST["password"];
-$password = sha1($password);
+//$password = sha1($password);
 
 //print the username and password
 //print("this is $username <br>and this is $password");

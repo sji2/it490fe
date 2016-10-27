@@ -1,5 +1,7 @@
 <?php 
 
+	session_start();
+
 	require_once('path.inc');
 	require_once('get_host_info.inc');
 	require_once('rabbitMQLib.inc');
@@ -28,6 +30,7 @@
 				break;
 
 			case 'search':
+				$request['username']=$_SESSION['username'];
 				$request['param'] = array('year' => $_POST['param']['year'],'make' => $_POST['param']['make'],'model'=>$_POST['param']['model']);
 				break;
 			

@@ -122,9 +122,7 @@
 				echo "<table border='4' class='stats' cellspacing='5'>
 
 					 	<tr>
-					 	<th>Username	</th>
-					 	<th>License Plate	</th>
-					 	<th>Year	</th>
+					 	<th>Year	</th>					 	
 					 	<th>Make	</th>
 					 	<th>Model 	</th>
 					 	</tr>";
@@ -259,6 +257,7 @@
     			year = $("#yearSelect").val();
     			make = $("#makeSelect").val();
 				model = $("#modelSelect").val();
+				
 
 
     			event.preventDefault();
@@ -269,8 +268,13 @@
                 }).done(function(result){
                     result = JSON.parse(result);
                     results = result['Results'];  
-                    console.log(results);
+                    //console.log(results);
 
+                    $('.stats').append("<tr><td>"+year+"</td><td>"+make+"</td><td>"+model+"</td></tr>");
+
+                    
+
+// adding to a row
                     
                 	});
 
