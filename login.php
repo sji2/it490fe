@@ -101,7 +101,7 @@
 				echo "<br><br>";
 
 
-			echo "<form>
+			echo "<form id='searchform'>
 					<label>Year</label>
 					<select name='year' id='yearSelect'>
 					</select>
@@ -112,7 +112,9 @@
 
 					<label>Model</label>
 					<select name='model' id='modelSelect'>
-					</select>		
+					</select>
+					
+					<button type='submit' name='submit'> Add </button>                		
 
 				</form>	";
 
@@ -176,7 +178,12 @@
 	<script type="text/javascript">		
 	
 
+
 	$(document).ready(function(){	
+
+
+			
+
 
 	//call api for model years
 		$.ajax({
@@ -186,6 +193,7 @@
             }).done(function(result){
                 result = JSON.parse(result);                
                 results = result['Results'];
+                                
 
                 for(row in results)
                 {
@@ -243,6 +251,31 @@
                     }   
                 });
             });
+
+    $('#searchform').submit(function(event){
+    			
+    			//Get year make and model using jquery selecter
+
+    			year = $("#yearSelect").val();
+    			make = $("#makeSelect").val();
+				model = $("#modelSelect").val();
+
+
+    			event.preventDefault();
+    			 $.ajax({
+                    type: "POST",
+                    url: "proxy.php",
+                    data: {type: "search", param: {year: year, make: make, model:model}},
+                }).done(function(result){
+                    result = JSON.parse(result);
+                    results = result['Results'];  
+                    console.log(results);
+
+                    
+                	});
+
+
+    			});
 
 	});
 

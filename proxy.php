@@ -26,6 +26,10 @@
 			case 'model':
 				$request['param'] = array('year' => $_POST['param']['year'],'make' => $_POST['param']['make']);
 				break;
+
+			case 'search':
+				$request['param'] = array('year' => $_POST['param']['year'],'make' => $_POST['param']['make'],'model'=>$_POST['param']['model']);
+				break;
 			
 		}
 		
