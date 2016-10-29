@@ -131,24 +131,17 @@
 
 				foreach ($payload ["cars"] as $x => $x_value) {
 				
-					//TO MAKE A TABLE LOOK AT THE FORM.PHP IN 202 FOLDER Downloads/TestSite
-					 
-					 	foreach ($x_value as $y => $y_value) {
+				 	foreach ($x_value as $y => $y_value) {
 							
 					            echo "<td>" . "$y_value" . "</td>";
 						}
+						echo "<td>" . "<a href='recallInfo.php?year=".$x_value['year']."&make=".$x_value['make']."&model=".$x_value['model']."'> View Recalls </a>". "</td>";
 						echo "</tr>";
    			echo "</div>";
    
 				}
  
 
- ////////////////////////////////////
-
-		
-
-
-//////////////////////////////////
 			}
 
 		else {
@@ -266,9 +259,10 @@
                     url: "proxy.php",
                     data: {type: "search", param: {year: year, make: make, model:model}},
                 }).done(function(result){
+                    console.log(results);
                     result = JSON.parse(result);
                     results = result['Results'];  
-                    //console.log(results);
+                    console.log(results);
 
                     $('.stats').append("<tr><td>"+year+"</td><td>"+make+"</td><td>"+model+"</td></tr>");
 

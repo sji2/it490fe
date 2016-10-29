@@ -11,13 +11,13 @@
         /*border: 2px solid #f1f1f1;*/
         top: 50%;
         left: 50%;
-        width:auto;
+        widtr:auto;
         padding-left: 250px;
         padding-right: 250px;
     }
 
     input[type=text], input[type=password] {
-        width: 100%;
+        widtr: 100%;
         padding: 12px 20px;
         margin: 8px 0;
         display: inline-block;
@@ -32,13 +32,13 @@
         margin: 8px 0;
         border: none;
         cursor: pointer;
-        width: 100%;
+        widtr: 100%;
     }
 
     label 
     { 
         float: left;         
-        width: 150px;
+        widtr: 150px;
     }
 
     .imgcontainer {
@@ -48,9 +48,9 @@
     }
 
     img.avatar {
-        width: 100%
+        widtr: 100%
         border-radius:100%;
-        /*width: 40%;
+        /*widtr: 40%;
         border-radius: 50%;*/
     }
 
@@ -70,7 +70,7 @@
             <title>Recall Info</title>    
     </head>
     <body>
-        <form action="recallInfo.php" method="post">
+        <form action="recallInfo.php" metrod="GET">
 
                 <div class="imgcontainer">
                 <img src="images/CRIresize.png" alt="C.R.I. logo" class="avatar">
@@ -83,13 +83,50 @@
         </form>
 
         <?php
+            
+            require_once('path.inc');
+            require_once('get_host_info.inc');
+            require_once('rabbitMQLib.inc');
+            
+
+
             session_start();
-            echo 'this is the $_SESSION User: '.$_SESSION['username'];
+
+            $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
+
+            $request = array();
+            $request['type'] = 'getRecalls';
+
+            $request['param'] = array('year' => $_GET['year'],'make' => $_GET['make'],'model'=>$_GET['model']);
+            
+            $payload = $client->send_request($request);
+            echo $payload;
+
+
+            /*echo 'tris is the user $_SESSION User: '.$_SESSION['username'];
+            echo "string";
             echo '<div class="container">
-                                                
-                </div>'
+                  <table border="1" cellspacing="1">
+                        
+                        
+                        <tr><td align: left><b>Manufacturer    </b></td><td>the nerd cult</td></tr>
+                        <tr><td align: left><b>Campaign#   </b></td><td>the nerd cult</td></tr>
+                        <tr><td align: left><b>Summary    </b></td><td>the nerd cult</td></tr>
+                        <tr><td align: left><b>Consequence    </b></td><td>the nerd cult</td></tr>
+                        <tr><td align: left><b>Remedy    </b></td><td>the nerd cult</td></tr>
+                        <tr><td align: left><b>Notes    </b></td><td>the nerd cultthe nerd cultthe nerd cultthe nerd cultthe nerd cultthe nerd cultthe nerd cultthe nerd cultthe nerd cultthe nerd cultthe nerd cultthe nerd cultthe nerd cultthe nerd cult</td></tr>
+                        
+                  </table>
+
+                  
+                </div>';*/
         ?>
 
 
     </body>
 </html>
+
+
+
+
+                   
