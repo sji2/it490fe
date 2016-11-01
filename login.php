@@ -96,7 +96,7 @@
 				//echo $_SESSION['username'];
 				//echo $username;
 
-				echo "<div style='text-align:right'><a href='login.html?action=logout'>Logout</a></div><br><br>";				
+				echo "<div style='text-align:right'><a href='login.html?action=Logout'>Logout</a></div><br><br>";				
 				echo "Welcome ".$payload["first_name"] . "	" . $payload["last_name"];
 				echo "<br><br>";
 
@@ -137,11 +137,11 @@
 						}
 						echo "<td>" . "<a href='recallInfo.php?year=".$x_value['year']."&make=".$x_value['make']."&model=".$x_value['model']."'> View Recalls </a>". "</td>";
 						echo "</tr>";
-   			echo "</div>";
+   			
    
 				}
  
-
+			echo "</div>";
 			}
 
 		else {
