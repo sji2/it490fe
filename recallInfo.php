@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 
-
-
 <html>
 <style type>
 
@@ -82,7 +80,7 @@
             </script> -->
     </head>
     <body>
-        <form action="recallInfo.php" metrod="GET">
+        <form action="recallInfo.php" method="GET">
 
                 <div class="imgcontainer">
                 <img src="images/CRIresize.png" alt="C.R.I. logo" class="avatar">
@@ -96,66 +94,43 @@
 
         </form>
 
-        <?php
-
-
+<?php
+        
+    require_once('path.inc');
+    require_once('get_host_info.inc');
+    require_once('rabbitMQLib.inc');
             
-            require_once('path.inc');
-            require_once('get_host_info.inc');
-            require_once('rabbitMQLib.inc');
+    session_start();
+    $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
+
+    $request = array();
+    $request['type'] = 'getRecalls';
+
+    $request['param'] = array('year' => $_GET['year'],'make' => $_GET['make'],'model'=>$_GET['model']);
+    
+    $payload = $client->send_request($request);
+    $payload =json_decode($payload, true); 
+    //print_r($payload);
+
+    if (isset($_SESSION['username'])) {
             
-               
+    echo '<div class="container">';        
+           
+            foreach ($payload as $x => $recall) {
+                
+                echo '<table border="1" cellspacing="1">';
 
-
-
-            session_start();
-
-            $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
-
-            $request = array();
-            $request['type'] = 'getRecalls';
-
-            $request['param'] = array('year' => $_GET['year'],'make' => $_GET['make'],'model'=>$_GET['model']);
-            
-            $payload = $client->send_request($request);
-            $payload =json_decode($payload, true); 
-            //echo $payload;
-
-echo '<div class="container">
-                  <table border="1" cellspacing="1">
-                        <tr>
-                        <td align: left><b>Year    </b></td>
-                        <td align: left><b>Make    </b></td>
-                        <td align: left><b>Model    </b></td>
-
-                        <td align: left><b>Manufacturer    </b></td>
-                        <td align: left><b>Campaign#   </b></td>
-                        <td align: left><b>Manufacturer    </b></td>
-                        <td align: left><b>Report Received On     </b></td>
-                        <td align: left><b>Components    </b></td>
-                        <td align: left><b>Summary    </b></td>
-                        <td align: left><b>Consequence    </b></td>
-                        <td align: left><b>Remedy    </b></td>
-                        <td align: left><b>Notes    </b></td>
-                        </tr>';
-               foreach ($payload as $x => $recall) {
-                        echo'<tr>';
-                            foreach ($recall as $y => $value) {
-                                echo '<td align: left>'.$value.'</td>';
-
-                            }
-                        echo'</tr>';
-                        }
-
-
+                foreach ($recall as $y => $value) {                    
                         
-            echo '</table>                  
-        </div>'; 
-
-             
-        ?>
-
-
+                    echo '<tr><td><b>'.ucfirst($y).'</b></td><td align: left>'.$value.'</td></tr>';
+                        
+                    }
+                echo '</table><br><br>';
+                }
+        
+    echo '</div>'; 
+    }
+?>
     </body>
 </html>
 

@@ -63,8 +63,8 @@
 
 		//retrieve the username and password from the login.html
 		$username = $_POST["username"];
-		$password = $_POST["password"];
-		//$password = sha1($password);
+		//$password = $_POST["password"];		
+		$password = sha1($_POST["password"]);		
 		$type = $_POST["type"];
 
 		//assign $client
@@ -97,9 +97,8 @@
 				//echo $username;
 
 				echo "<div style='text-align:right'><a href='login.html?action=Logout'>Logout</a></div><br><br>";				
-				echo "Welcome ".$payload["first_name"] . "	" . $payload["last_name"];
+				echo "Welcome ".$payload["first_name"]. "	" . $payload["last_name"];
 				echo "<br><br>";
-
 
 			echo "<form id='searchform'>
 					<label>Year</label>
