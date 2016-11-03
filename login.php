@@ -52,12 +52,11 @@
 	require_once('path.inc');
 	require_once('get_host_info.inc');
 	require_once('rabbitMQLib.inc');
+
+	ini_set('session_cache_limiter()', 'public');
+	session_cache_limiter(false);
 	
 	session_start();
-	
-	//echo $_POST['username'];
-	//print_r($_POST);
-
 
 	if (!empty($_POST)) {
 
@@ -97,7 +96,7 @@
 				//echo $username;
 
 				echo "<div style='text-align:right'><a href='login.html?action=Logout'>Logout</a></div><br><br>";				
-				echo "Welcome ".$payload["first_name"]. "	" . $payload["last_name"];
+				echo "<h1> Welcome ".$payload["first_name"]. "	" . $payload["last_name"]."</h1>";
 				echo "<br><br>";
 
 			echo "<form id='searchform'>

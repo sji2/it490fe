@@ -70,14 +70,6 @@
     <head>
             <title>Recall Info</title>    
 
-         <!--    <script type="text/javascript">
-    
-            function goBack() {
-            var link = "login.php?action=Login"
-            document.getElementById("demo").innerHTML = link;
-            //window.history.back()
-                }
-            </script> -->
     </head>
     <body>
         <form action="recallInfo.php" method="GET">
@@ -85,8 +77,6 @@
                 <div class="imgcontainer">
                 <img src="images/CRIresize.png" alt="C.R.I. logo" class="avatar">
                 </div>
-
-                <button onclick="goBack()">Go Back</button>
 
                 <div class="container">
 
