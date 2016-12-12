@@ -3,11 +3,21 @@
 <html>
 <style type>
 
-    body
-    {
-    background-color: #00c7dc;
+    html body{
+
+        background: white;
+        
     }
 
+    h1{
+
+        text-align: center;
+        font-size: 60px!important;      
+        color: #00C5DC!important;
+        font-weight: bold!important;
+    }
+
+   
     form { 
         /*border: 2px solid #f1f1f1;*/
         top: 50%;
@@ -49,15 +59,14 @@
     }
 
     img.avatar {
-        widtr: 100%
+        width: 100%
         border-radius:100%;
         /*widtr: 40%;
         border-radius: 50%;*/
     }
 
-    
     .container {
-        padding: 16px;
+       
     }
 
     span.psw {
@@ -65,24 +74,104 @@
        float: none;
     }  	
 
+    .sidebar{
+
+        /*height: 768px;*/
+        height: 100%;
+
+    }
+
+    .sidebar a{
+
+        color: white;
+
+    }
+
+    .sideBarLink{
+
+        margin-top: 40px;
+        font-size: 18px;
+
+    }
+
+    tr:nth-child(even){
+
+        background: #EEEEEE;
+
+    }
+
+    thead tr {
+
+        background: #00C5DC;
+    }
+
+    table{
+
+        margin-top: 50px;
+        max-width:960px;
+        
+
+    }
+
+    /*table th {
+
+        border: 2px solid black !important;         
+    }*/
+
+
+
+
+
 </style>
 
     <head>
-            <title>Recall Info</title>    
+            <title>Recall Info</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Stylesheets -->
+     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-material-design.css">
+    <link href="css/navbar-fixed-side.css" rel="stylesheet" />    
 
     </head>
     <body>
-        <form action="recallInfo.php" method="GET">
 
-                <div class="imgcontainer">
-                <img src="images/CRIresize.png" alt="C.R.I. logo" class="avatar">
+    <div class="container-fluid main">
+
+    <!-- The entire width of the page will be 1 row -->
+    <div class="row">
+
+    <!-- Sidebar -->
+        <div class="sidebar col-lg-2" style="background: #949494;">
+            <!-- normal collapsible navbar markup -->
+            
+            <div class="imgcontainer">
+            <img src="images/CRIsidebar.png" 
+            alt="C.R.I. logo" 
+            style="margin-top: 15px;"
+            class="avatar" 
+            width="170px" 
+            height="146.2px">
+            </div>
+
+                <div class="sideBarLink">
+            <?php 
+
+
+
+            echo "<a href='#'>Profile (broken link)</a><br><br>";             
+            echo "<a href='login.html?action=Logout'>Logout</a><br><br>";               
+
+             ?>
+
                 </div>
+            
+        </div>
 
-                <div class="container">
-
-                </div>
-
-        </form>
+        <!-- Rest of page -->
+        <div class="col-lg-10">
+        
 
 <?php
         
@@ -104,11 +193,17 @@
 
     if (isset($_SESSION['username'])) {
             
+    echo '<h1> '.$_GET["year"].' '.$_GET["make"].' '.$_GET["model"].'</h1>';
+
     echo '<div class="container">';        
            
             foreach ($payload as $x => $recall) {
                 
                 echo '<table border="1" cellspacing="1">';
+                echo '<thead> <tr>
+                        <th>Category    </th>
+                        <th>Details </th>                        
+                        </tr></thead>';
 
                 foreach ($recall as $y => $value) {                    
                         
@@ -121,6 +216,8 @@
     echo '</div>'; 
     }
 ?>
+
+</div>
     </body>
 </html>
 

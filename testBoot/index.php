@@ -1,91 +1,5 @@
 <!DOCTYPE html>
 <html>
-<style>
-	
-	html body{
-
-		background: white;
-	}
-
-	tr:nth-child(even){
-
-		background: #EEEEEE;
-
-	}
-
-	thead tr {
-
-		background: #00C5DC;
-	}
-
-	select{
-	
-		background-color:white;
-	}
-
-	#addBtn{
-
-		background: #00C5DC;
-		color: white;
-
-	}
-
-	form label {
-
-		color:black;
-	}
-
-	h1{
-
-		text-align: center;
-		font-size: 60px!important;		
-		color: #00C5DC!important;
-		font-weight: bold!important;
-	}
-
-	h4 {
-
-		text-align: center;
-		font-size: 20px!important;
-
-
-	}
-
-	.sidebar{
-
-		height: 768px;
-
-	}
-
-	.sidebar a{
-
-		color: white;
-
-	}
-
-	.sideBarLink{
-
-		margin-top: 40px;
-		font-size: 18px;
-
-	}
-
-	table{
-
-		margin-top: 50px;
-		border: 2px solid black !important;
-
-	}
-
-	/*table th {
-
-		border: 2px solid black !important;			
-	}*/
-
-
-
-</style>
-
 <head>
 	<title></title>
 
@@ -121,36 +35,21 @@
 		-->
 
 		<!-- Sidebar -->
-		<div class="sidebar col-lg-2" style="background: #949494;">
+		<div class="col-lg-1" style="background: #949494; height: 760px;">
     		<!-- normal collapsible navbar markup -->
-    		
-    		<div class="imgcontainer">
-	        <img src="images/CRIsidebar.png" 
-	        alt="C.R.I. logo" 
-	        style="margin-top: 15px;"
-	        class="avatar" 
-	        width="170px" 
-	        height="146.2px">
-	        </div>
-
-				<div class="sideBarLink">
-    		<?php 
-
-
-
-    		echo "<a href='#'>Profile</a><br><br>";				
-    		echo "<a href='login.html?action=Logout'>Logout</a><br><br>";				
-
-    		 ?>
-
-				</div>
-    		
+    		SIDEBAR
   		</div>
 
 		<!-- Rest of page -->
-		<div class="col-lg-10" style="background: white;">
+		<div class="col-lg-11" style="background: white; height: 760px;">
 				
-		
+		<div class="imgcontainer">
+        <img src="images/CRIresize.png" 
+        alt="C.R.I. logo" 
+        class="avatar" 
+        width="20%" 
+        height="20%">
+        </div>
 
 
 <?php
@@ -189,6 +88,10 @@
 		
 		//assign a payload variable to have the response from the server
 	
+		echo "<div class='container'>";
+		
+		
+
 		if (!empty($payload['first_name'])) 
 
 		{
@@ -199,12 +102,11 @@
 				//echo $_SESSION['username'];
 				//echo $username;
 
-				
-				echo "<h1> Profile </h1>";
-				echo "<h4> Welcome back, ".$payload["first_name"]. "	" . $payload["last_name"]."</h4>";
+				echo "<div style='text-align:right'><a href='login.html?action=Logout'>Logout</a></div><br><br>";				
+				echo "<h1> Welcome ".$payload["first_name"]. "	" . $payload["last_name"]."</h1>";
 				echo "<br><br>";
 
-			echo " <center> <form id='searchform'>
+			echo "<form id='searchform'>
 					<label>Year</label>
 					<select name='year' id='yearSelect'>
 					</select>
@@ -217,43 +119,34 @@
 					<select name='model' id='modelSelect'>
 					</select>
 					
+					<button type='submit' name='submit'> Add </button>                		
 
-					<br>
-					<button type='submit' class='btn btn-default' id='addBtn' name='submit'> Add </button>                		
-
-				</form>	</center>";
+				</form>	";
 
 
-				echo "<table border='4' class='table table-bordered' cellspacing='5'>
+				echo "<table border='4' class='stats' cellspacing='5'>
 
-					 	<thead> <tr>
-					 	<th>Year 	</th>
-					 	<th>Make </th>
+					 	<tr>
+					 	<th>Year	</th>					 	
+					 	<th>Make	</th>
 					 	<th>Model 	</th>
-					 	<th>Recalls	</th>
-					 	
-					 	</tr></thead>";
+					 	</tr>";
 
 					 	echo "<tr>";
 
 				foreach ($payload ["cars"] as $x => $x_value) {
-				/*
+				
 				 	foreach ($x_value as $y => $y_value) {
 							
 					            echo "<td>" . "$y_value" . "</td>";
 						}
 						echo "<td>" . "<a href='recallInfo.php?year=".$x_value['year']."&make=".$x_value['make']."&model=".$x_value['model']."'> View Recalls </a>". "</td>";
 						echo "</tr>";
-   			*/
-						echo "<td>" . $x_value['year'] . "</td>";
-						echo "<td>" . $x_value['make'] . "</td>";
-						echo "<td>" . $x_value['model'] . "</td>";
-						echo "<td>" . "<a href='recallInfo.php?year=".$x_value['year']."&make=".$x_value['make']."&model=".$x_value['model']."'> View Recalls </a>"."</td>";						
-						echo "</tr>";
+   			
    
 				}
  
-			
+			echo "</div>";
 			}
 
 		else {
@@ -277,7 +170,7 @@
 	
 	?>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 	<script type="text/javascript">		
 	
 
@@ -401,7 +294,7 @@
 </div><!-- END Container -->
 
 <!-- Scripts -->
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script type="text/javascript" src="js/material.js"></script>
 	<script type="text/javascript">
 	$(function () {
