@@ -248,24 +248,6 @@
 <div id="donutchart" style="height: 500px;"></div>
 </div>
 
-<!-- Third Stat -->
-<div class="stat">
-      <center>
-      <h2>Recalls by Part</h2>
-      <form id="searchform3">
-          <input type="hidden" id="yearSelect33" value="1990"></input>
-          <label>Year</label>
-          <select name="yearSelect3" id="yearSelect3">
-          </select>
-
-          <label>Make</label>
-          <select name="make" id="makeSelect3">
-          </select>
-          <input type="submit"></input>
-      </form>
-      </center>
-<div id="" style=""></div>
-</div>
 
   	</div><!-- END ROW -->
 

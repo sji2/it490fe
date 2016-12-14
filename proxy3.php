@@ -12,13 +12,17 @@
 	
 
     	$request = array();
-		$request['type'] = "toggleRecall";
 		
-
 		switch ($_POST['type']) 
 		{
 			case 'toggleRecall':
+				$request['type'] = "toggleRecall";				
 				$request['uuid'] = $_POST['uuid'];
+				break;
+
+			case 'deleteUserCar':
+				$request['type'] = "deleteUserCar";				
+				$request['id'] = $_POST['id'];
 				break;
 			
 		}

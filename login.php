@@ -66,8 +66,6 @@
 	}
 
 
-
-
 </style>
 
 <head>
@@ -90,20 +88,6 @@
 	<!-- The entire width of the page will be 1 row -->
 	<div class="row">
 		
-		<!-- Inside this row we will have 2 columns 
-			 one for the sidebar the other for the rest of the page 
-			
-			 Width in Bootstrap:
-			 Bootstrap always divides the width in the entire page into columns. The smallest column width is 1 and the largest is 12(entire page). We can have any number of columns in page as long as their total widths add up to 12.
-			 
-			 In our case we want the column of the sidebar to be 2 columns long and the rest of the page will be 10 long(12-2=10).  
-
-			 *Columns must always be inside a row*
-	
-			 Check for more into on "grid system"
-			 http://www.w3schools.com/bootstrap/bootstrap_grid_basic.asp
-		-->
-
 		<!-- Sidebar -->
 		<div class="sidebar col-lg-2" style="background: #949494;">
     		<!-- normal collapsible navbar markup -->
@@ -215,6 +199,7 @@
 					 	<th>Make </th>
 					 	<th>Model 	</th>
 					 	<th>Recalls	</th>
+					 	<th>	</th>
 					 	
 					 	</tr></thead>";
 
@@ -226,13 +211,12 @@
 						echo "<td>" . $x_value['year'] . "</td>";
 						echo "<td>" . $x_value['make'] . "</td>";
 						echo "<td>" . $x_value['model'] . "</td>";
-						echo "<td>" . "<a href='recallInfo.php?id=".$x_value['id']."'> View Recalls </a></td>";
-				/*		echo "<td>" . "<a href='recallInfo.php?year=".$x_value['year']."&make=".$x_value['make']."&model=".$x_value['model']."'> View Recalls </a>"."</td>";						*/
+						echo "<td>" . "<a href='recallInfo.php?id=".$x_value['id']."'> View Recalls </a></td>";				
+						echo "<td>" . "<a onclick= deleteUserCar('".$x_value['id']."') href='#'> Remove </a></td>";				
 						echo "</tr>";
    
 				}
- 
-			
+ 			
 			}
 
 		else {
@@ -243,31 +227,36 @@
 		if (isset($_GET['logout'])) {
 				session_unregister('username');	
 			}
-
-		
-		
-
 	}
-	/*echo "client received response: ".PHP_EOL;
-	print_r($response);
-	echo "\n\n";
-	*/
 
 	
 	?>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script type="text/javascript">		
-	
+	<script type="text/javascript">	
+
+
+	function deleteUserCar(id){
+
+        /*alert(id);*/
+        $.ajax({
+                type: "POST",
+                url: "proxy3.php",
+                data: {type: "deleteUserCar", id: id}
+            }).done(function(result){
+            	location.reload();
+                //result = JSON.parse(result);                
+                //console.log(result);
+
+            });
+
+    }
 
 
 	$(document).ready(function(){	
 
+//call api for model years
 
-			
-
-
-	//call api for model years
 		$.ajax({
                 type: "POST",
                 url: "proxy.php",
@@ -356,12 +345,9 @@
                     console.log(results);
 
                     $('.stats').append("<tr><td>"+year+"</td><td>"+make+"</td><td>"+model+"</td></tr>");
-
-                    
-
-// adding to a row
                     
                 	});
+                	location.reload();
 
 
     			});
