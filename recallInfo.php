@@ -19,7 +19,7 @@
 
    
     form { 
-        /*border: 2px solid #f1f1f1;*/
+        
         top: 50%;
         left: 50%;
         widtr:auto;
@@ -147,12 +147,12 @@
             <!-- normal collapsible navbar markup -->
             
             <div class="imgcontainer">
-            <img src="images/CRIsidebar.png" 
+            <a href="welcome.html"><img src="images/CRIsidebar.png" 
             alt="C.R.I. logo" 
             style="margin-top: 15px;"
             class="avatar" 
             width="170px" 
-            height="146.2px">
+            height="146.2px"></a>
             </div>
 
                 <div class="sideBarLink">
@@ -161,7 +161,7 @@
 
 
             echo "<a href='#'>Profile (broken link)</a><br><br>";             
-            echo "<a href='login.html?action=Logout'>Logout</a><br><br>";               
+            echo "<a href='welcome.html'>Logout</a><br><br>";               
 
              ?>
 
@@ -185,7 +185,7 @@
     $request = array();
     $request['type'] = 'getRecalls';
 
-    $request['param'] = array('year' => $_GET['year'],'make' => $_GET['make'],'model'=>$_GET['model']);
+    $request['id'] = $_GET['id'];
     
     $payload = $client->send_request($request);
     $payload =json_decode($payload, true); 
@@ -193,32 +193,77 @@
 
     if (isset($_SESSION['username'])) {
             
-    echo '<h1> '.$_GET["year"].' '.$_GET["make"].' '.$_GET["model"].'</h1>';
+    /*echo '<h1> '.$_GET["year"].' '.$_GET["make"].' '.$_GET["model"].'</h1>';*/
 
-    echo '<div class="container">';        
-           
+        echo '<div class="container">';        
+               
             foreach ($payload as $x => $recall) {
-                
+                    
                 echo '<table border="1" cellspacing="1">';
                 echo '<thead> <tr>
-                        <th>Category    </th>
+                         <th>Category    </th>
                         <th>Details </th>                        
-                        </tr></thead>';
+                            </tr></thead>';
 
-                foreach ($recall as $y => $value) {                    
+
+                foreach ($recall as $y => $value){
+                            
+                    if($y == 'checked'){
+
+                        if($value == '1'){
+
+                            echo '<tr><td><b>'.ucfirst('Repaired?').'</b></td><td align: left>'.'<input onclick="updateCheck('.$recall['uuid'].')" type="checkbox" checked="checked">'.'</td></tr>';
+                            }
+
+                        else{
+
+                            echo '<tr><td><b>'.ucfirst('Repaired?').'</b></td><td align: left>'.'<input onclick="updateCheck('.$recall['uuid'].')" type="checkbox">'.'</td></tr>';                      
+                            }
                         
-                    echo '<tr><td><b>'.ucfirst($y).'</b></td><td align: left>'.$value.'</td></tr>';
-                        
+                        continue;
+
+                        }
+
+
+                    echo '<tr><td><b>'.ucfirst($y).'</b></td><td align: left>'.$value.'</td></tr>';                       
                     }
-                echo '</table><br><br>';
-                }
-        
-    echo '</div>'; 
+
+                   echo '</table><br><br>';
+                    }
+            
+        echo '</div>'; 
     }
 ?>
 
 </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        
+    function updateCheck(id){
+
+        /*alert(id);*/
+        $.ajax({
+                type: "POST",
+                url: "proxy3.php",
+                data: {type: "toggleRecall", uuid: id}                
+            }).done(function(result){
+                //result = JSON.parse(result);                
+                //console.log(result);
+
+            });
+
+    }
+
+
+
+    </script>
+
+
     </body>
+
+
+
 </html>
 
 

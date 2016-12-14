@@ -21,7 +21,7 @@
     input[type=text], input[type=password] {
         width: 100%;
         padding: 12px 20px;
-        margin: 8px 0;
+        /*margin: 8px 0;*/
         display: inline-block;
         border: 1px solid #ccc;
         box-sizing: border-box;
@@ -66,6 +66,8 @@
        float: none;
     }  	
 
+    h4{margin-bottom: 1px; font-family: "PT Sans Narrow", Times, sans-serif; font-size: 20px; color: white;}
+
 </style>
 
 <script>
@@ -93,30 +95,23 @@
         <form action="registration.php" method="post">
 
                 <div class="imgcontainer">
-                <img src="images/CRIresize.png" alt="C.R.I. logo" class="avatar">
+                <a href="welcome.html"><img src="images/CRIresize.png" alt="C.R.I. logo" class="avatar"></a>
                 </div>
 
                 <div class="container">
-                <label for="firstName"> First Name </label>
+                <label for="firstName"> <h4> First Name </h4> </label>
                 <input type=text name="firstName">
-                <br>
-                <br>
+                
 
-                <label for="lastName"> Last Name </label>
+                <label for="lastName"><h4> Last Name </h4></label>
                 <input type=text name="lastName">
-                <br>
-                <br>
 
-                <label for="username"> Username </label>
+                <label for="username"><h4> Username </h4> </label>
                 <input type=text name="username">
-                <br>
-                <br>
-
-                <label for="password"> Password </label>
+                
+                <label for="password"><h4> Password </h4> </label>
                 <input type="password" name="password" id="password">
-                <br>
-                <br>
-
+                
                 <!-- <label for="confirmPassword"> Confirm Password </label>
                 <input type="password" name="confirmPassword" id="confirmPassword">
                 <br> -->

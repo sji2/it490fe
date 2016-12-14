@@ -35,21 +35,9 @@
 		color:black;
 	}
 
-	h1{
+	h1{	font-family: "PT Sans Narrow", Times, sans-serif; text-align: center; font-size: 60px!important; color: #00C5DC!important; font-weight: bold!important;}
 
-		text-align: center;
-		font-size: 60px!important;		
-		color: #00C5DC!important;
-		font-weight: bold!important;
-	}
-
-	h4 {
-
-		text-align: center;
-		font-size: 20px!important;
-
-
-	}
+	h4{font-family: "PT Sans Narrow", Times, sans-serif; font-size: 60px!important; text-align: center;}
 
 	.sidebar{
 
@@ -77,10 +65,6 @@
 
 	}
 
-	/*table th {
-
-		border: 2px solid black !important;			
-	}*/
 
 
 
@@ -125,12 +109,12 @@
     		<!-- normal collapsible navbar markup -->
     		
     		<div class="imgcontainer">
-	        <img src="images/CRIsidebar.png" 
+	        <a href="welcome.html"><img src="images/CRIsidebar.png" 
 	        alt="C.R.I. logo" 
 	        style="margin-top: 15px;"
 	        class="avatar" 
 	        width="170px" 
-	        height="146.2px">
+	        height="146.2px"></a>
 	        </div>
 
 				<div class="sideBarLink">
@@ -139,7 +123,7 @@
 
 
     		echo "<a href='#'>Profile</a><br><br>";				
-    		echo "<a href='login.html?action=Logout'>Logout</a><br><br>";				
+    		echo "<a href='welcome.html'>Logout</a><br><br>";				
 
     		 ?>
 
@@ -237,18 +221,13 @@
 					 	echo "<tr>";
 
 				foreach ($payload ["cars"] as $x => $x_value) {
-				/*
-				 	foreach ($x_value as $y => $y_value) {
-							
-					            echo "<td>" . "$y_value" . "</td>";
-						}
-						echo "<td>" . "<a href='recallInfo.php?year=".$x_value['year']."&make=".$x_value['make']."&model=".$x_value['model']."'> View Recalls </a>". "</td>";
-						echo "</tr>";
-   			*/
+				
+				
 						echo "<td>" . $x_value['year'] . "</td>";
 						echo "<td>" . $x_value['make'] . "</td>";
 						echo "<td>" . $x_value['model'] . "</td>";
-						echo "<td>" . "<a href='recallInfo.php?year=".$x_value['year']."&make=".$x_value['make']."&model=".$x_value['model']."'> View Recalls </a>"."</td>";						
+						echo "<td>" . "<a href='recallInfo.php?id=".$x_value['id']."'> View Recalls </a></td>";
+				/*		echo "<td>" . "<a href='recallInfo.php?year=".$x_value['year']."&make=".$x_value['make']."&model=".$x_value['model']."'> View Recalls </a>"."</td>";						*/
 						echo "</tr>";
    
 				}

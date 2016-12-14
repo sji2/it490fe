@@ -1,47 +1,71 @@
 
 <!DOCTYPE html>
 <html>
-<style>
-    
-
-    body{
-        /*background-color: #ffffff;*/
-        background-color: #00c7dc;
-    }
-
-    .imgcontainer {
-        /*background-color: #ffffff;*/
-        text-align: left;
-        margin: auto;
-        /*margin: 24px 0 12px 0;*/
-    }
-    
-    img.avatar {
-        
-        border-radius: auto;
-    }
-
-    .container {
-        padding: 16px;
-        text-align: center;
-    }
-
-</style>
-
-
-
 <head>
-    <title>Statistics Page</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <title></title>
 
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-material-design.css">
+    <style>
+      body{
+        background-color: white;
+      }
+
+      h1{
+        font-family: PT Sans Narrow;
+        text-align: center;
+        color: #00C5DC;
+        font-size: 60px;
+        font-weight: bold;
+        margin-bottom: 50px;
+      }
+
+      .stat{
+        margin-bottom: 100px;
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-        
         $(document).ready(function(){
 
             year = $("#yearSelect").val();
             $("#makeSelect").empty();
+            $("#makeSelect2").empty();
+            $("#makeSelect3").empty();
 
-            //call api for makes
+            //fill yearSelect2 and 3 with years from 1950-2016
+            for(i = 1950; i < 2017; i++)
+            {
+              $('#yearSelect2').append("<option value="+i+">"+i+"</option>");
+              $('#yearSelect3').append("<option value="+i+">"+i+"</option>");
+            }
+
+            $('#yearSelect2').on("change", function(){
+                year = this.value;
+                $("#makeSelect2").empty();
+                $.ajax
+                ({
+                    type: "POST",
+                    url: "proxy2.php",
+                    data: {type: "make", param: {year: year}},
+                }).done(function(result)
+                {
+
+                    result = JSON.parse(result);
+                    results = result['Results'];
+
+                    for(row in results)
+                    {
+                        //console.log(results[row]['Make']);
+                        make = results[row]['Make'];
+                        $("#makeSelect2").append("<option value="+make+">"+make+"</option>");
+                    }
+                });
+            });
+
+            //call api for makes for first stat
             $.ajax
             ({
                 type: "POST",
@@ -49,7 +73,7 @@
                 data: {type: "make", param: {year: year}},
             }).done(function(result)
             {
-                
+
                 result = JSON.parse(result);
                 results = result['Results'];
 
@@ -62,7 +86,7 @@
             });
 
 
-
+            //get recalls by make every 5 yrs
             $('#searchform').submit(function(event)
             {
                 $('#stats').empty();
@@ -77,43 +101,182 @@
                     data: {type: "search", param: {year: year, make: make}},
                 }).done(function(result)
                 {
-                    console.log(result);
-                    $('#stats').append(result);
+                    //console.log(result);
+                    //$('#stats').append(result);
 
+                    //turn result(json) into object
+                    json = JSON.parse(result);
 
+                    //console.log('testing:');
+                    //console.log(json);
+
+                    recallChart = [
+                      ['# Recalls ', 'recalls'],
+                    ];
+
+                    for(key in json)
+                      recallChart.push([key, json[key]]);
+
+                    console.log(recallChart);
+                    drawBasic(recallChart);
                 });
             });
+
+            //get recalls by make
+            $('#searchform2').submit(function(event){
+              year = $("#yearSelect2").val();
+              make = $("#makeSelect2").val();
+
+              event.preventDefault();
+
+              $.ajax({
+                  type: "POST",
+                  url: "proxy2.php",
+                  data: {type: "makeRecall", param: {year: year, make: make}},
+              }).done(function(result)
+              {
+                  //console.log(result);
+
+                  //turn result(json) into object
+                  json = JSON.parse(result);
+
+                  recallChart = [
+                    ['Model ', '# recalls'],
+                  ];
+
+                  for(key in json)
+                    recallChart.push([key, json[key]]);
+
+                  console.log(recallChart);
+                  drawDonut(recallChart, make, year);
+              });
+
+            });
+
+            google.charts.load('current', {packages: ['corechart', 'bar']});
+            //google.charts.setOnLoadCallback(drawBasic);
+            function drawBasic(arr)
+            {
+
+            var data = google.visualization.arrayToDataTable(arr);
+
+            var options = {
+              title: '# of Recalls every 5 years',
+              chartArea: {width: '70%'},
+              hAxis: {
+                title: 'Recalls',
+                minValue: 0
+              },
+              vAxis: {
+                title: 'Year'
+              }
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+
+            chart.draw(data, options);
+           }
+
+           function drawDonut(arr, make, year) {
+             var data = google.visualization.arrayToDataTable([
+               ['Task', 'Hours per Day'],
+               ['Work',     11],
+               ['Eat',      2],
+               ['Commute',  2],
+               ['Watch TV', 2],
+               ['Sleep',    7]
+             ]);
+
+             var data = google.visualization.arrayToDataTable(arr);
+
+             var options = {
+               title: 'Recalls per '+ year +' ' + make + ' Model',
+               pieHole: 0.4,
+             };
+
+             var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+             chart.draw(data, options);
+           }
 
         });
     </script>
 </head>
 <body>
-        <div class="imgcontainer">
-        <img src="images/CRIresize.png" 
-        alt="C.R.I. logo" 
-        class="avatar" 
-        width="20%" 
-        height="20%">
-        </div>
 
-<h1># Recalls per 5 years given a make and model</h1>
-<h2>Starting from 1990</h2>
-<form id="searchform">
-    <input type="hidden" id="yearSelect" value="1990"></input>  
+  <!-- Everything must be inside a boostrap container -->
+  <div class="container-fluid main">
 
-    <label>Make</label>
-    <select name="make" id="makeSelect">
-    </select>
+  	<!-- The entire width of the page will be 1 row -->
+  	<div class="row">
+
+      <h1>Statistics</h1>
+
+<!-- First Stat -->
+<div class="stat">
+      <center>
+      <h2>Total Recalls by Manufacturer (5 yr intervals)</h2>
+      <h3>Starting from 1990</h3>
+      <form id="searchform">
+          <input type="hidden" id="yearSelect" value="1990"></input>
+
+          <label>Make</label>
+          <select name="make" id="makeSelect">
+          </select>
+          <input type="submit"></input>
+      </form>
+</center>
+<div id="chart_div"></div>
+</div>
 
 
-    <input type="submit"></input>
-</form>
+<!-- Second Stat -->
+<div class="stat">
+      <center>
+      <h2>Recalls by Model</h2>
+      <form id="searchform2">
+          <input type="hidden" id="yearSelect22" value="1990"></input>
+          <label>Year</label>
+          <select name="yearSelect2" id="yearSelect2">
+          </select>
 
-<p id="stats">
+          <label>Make</label>
+          <select name="make" id="makeSelect2">
+          </select>
+          <input type="submit"></input>
+      </form>
+      </center>
+<div id="donutchart" style="height: 500px;"></div>
+</div>
 
-</p>
+<!-- Third Stat -->
+<div class="stat">
+      <center>
+      <h2>Recalls by Part</h2>
+      <form id="searchform3">
+          <input type="hidden" id="yearSelect33" value="1990"></input>
+          <label>Year</label>
+          <select name="yearSelect3" id="yearSelect3">
+          </select>
 
-  
+          <label>Make</label>
+          <select name="make" id="makeSelect3">
+          </select>
+          <input type="submit"></input>
+      </form>
+      </center>
+<div id="" style=""></div>
+</div>
 
+  	</div><!-- END ROW -->
+
+  </div><!-- END Container -->
+
+  <script type="text/javascript" src="js/material.js"></script>
+	<script type="text/javascript">
+	$(function () {
+	    $.material.init();
+
+	  });
+	</script>
 </body>
 </html>
