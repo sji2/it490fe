@@ -19,10 +19,18 @@
         font-weight: bold;
         margin-bottom: 50px;
       }
+      h4{
+        font-family: PT Sans Narrow;
+        text-align: center;
+        color: #00c5dc;
+        font-size: 20px;
+        font-weight: bold;        
+      }
 
       .stat{
         margin-bottom: 100px;
       }
+      .btn {position: absolute; background:white; color: #00c5dc; border-style: solid; border-color: #00c5dc; border-width: 2px; text-align: center;}
     </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -209,12 +217,18 @@
   	<!-- The entire width of the page will be 1 row -->
   	<div class="row">
 
+  <!-- Go Back Button -->
+
+      <left>
+      <button onclick="window.location.href='welcome.html'" type="submit" class = 'btn' id='go' name='submit'><h4>Go Back</h4></button>
+      </left>
+
       <h1>Statistics</h1>
 
 <!-- First Stat -->
 <div class="stat">
       <center>
-      <h2>Total Recalls by Manufacturer (5 yr intervals)</h2>
+      <h2>Total Recalls by Manufacturer (5 year intervals)</h2>
       <h3>Starting from 1990</h3>
       <form id="searchform">
           <input type="hidden" id="yearSelect" value="1990"></input>
@@ -246,25 +260,6 @@
       </form>
       </center>
 <div id="donutchart" style="height: 500px;"></div>
-</div>
-
-<!-- Third Stat -->
-<div class="stat">
-      <center>
-      <h2>Recalls by Part</h2>
-      <form id="searchform3">
-          <input type="hidden" id="yearSelect33" value="1990"></input>
-          <label>Year</label>
-          <select name="yearSelect3" id="yearSelect3">
-          </select>
-
-          <label>Make</label>
-          <select name="make" id="makeSelect3">
-          </select>
-          <input type="submit"></input>
-      </form>
-      </center>
-<div id="" style=""></div>
 </div>
 
   	</div><!-- END ROW -->

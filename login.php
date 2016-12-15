@@ -35,13 +35,13 @@
 		color:black;
 	}
 
-	h1{	font-family: "PT Sans Narrow", Times, sans-serif; text-align: center; font-size: 60px!important; color: #00C5DC!important; font-weight: bold!important;}
+	h1{	font-family: "PT Sans Narrow", Times, sans-serif!important; text-align: center; font-size: 60px!important; color: #00C5DC!important; font-weight: bold!important;}
 
-	h4{font-family: "PT Sans Narrow", Times, sans-serif; font-size: 60px!important; text-align: center;}
+	h4{font-family: "PT Sans Narrow", Times, sans-serif!important; font-size: 40px!important; text-align: center;}
 
 	.sidebar{
 
-		height: 768px;
+		height: 1000px;
 
 	}
 
@@ -104,9 +104,6 @@
 				<div class="sideBarLink">
     		<?php 
 
-
-
-    		echo "<a href='#'>Profile</a><br><br>";				
     		echo "<a href='welcome.html'>Logout</a><br><br>";				
 
     		 ?>
@@ -169,7 +166,7 @@
 
 				
 				echo "<h1> Profile </h1>";
-				echo "<h4> Welcome back, ".$payload["first_name"]. "	" . $payload["last_name"]."</h4>";
+				echo "<h4> Welcome ".$payload["first_name"]. "	" . $payload["last_name"]."!"."</h4>";
 				echo "<br><br>";
 
 			echo " <center> <form id='searchform'>
@@ -234,7 +231,6 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script type="text/javascript">	
-
 
 	function deleteUserCar(id){
 

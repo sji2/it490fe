@@ -10,7 +10,7 @@
     }
 
     h1{
-
+        font-family: "PT Sans Narrow", Times, sans-serif!important;
         text-align: center;
         font-size: 60px!important;      
         color: #00C5DC!important;
@@ -77,7 +77,7 @@
     .sidebar{
 
         /*height: 768px;*/
-        height: 100%;
+        height: 2500px;
 
     }
 
@@ -107,6 +107,7 @@
 
     table{
 
+        margin:0 auto;
         margin-top: 50px;
         max-width:960px;
         
@@ -149,7 +150,7 @@
             <div class="imgcontainer">
             <a href="welcome.html"><img src="images/CRIsidebar.png" 
             alt="C.R.I. logo" 
-            style="margin-top: 15px;"
+            style="margin-top: 15px; margin-left: -50px;"
             class="avatar" 
             width="170px" 
             height="146.2px"></a>
@@ -157,10 +158,7 @@
 
                 <div class="sideBarLink">
             <?php 
-
-
-
-            echo "<a href='#'>Profile (broken link)</a><br><br>";             
+                         
             echo "<a href='welcome.html'>Logout</a><br><br>";               
 
              ?>
@@ -193,7 +191,7 @@
 
     if (isset($_SESSION['username'])) {
             
-    /*echo '<h1> '.$_GET["year"].' '.$_GET["make"].' '.$_GET["model"].'</h1>';*/
+    echo '<h1> '.$payload[0]['year'].' '.$payload[0]['make'].' '.$payload[0]['model'].' '.'</h1>';
 
         echo '<div class="container">';        
                
